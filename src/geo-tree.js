@@ -1,3 +1,15 @@
+// geo-tree implementation (using red-black tree and z-curve)
+//
+// public API of GeoTree:
+// ---
+// var gt = new GeoTree();  ... create empty tree
+// gt.insert(...);          ... inserts (array of) { lat: ..., lng: ..., data: ...} object(s)
+// gt.find(...);            ... returns array of data objects with specified coordinates /
+//                              in specified rectangle / in specified circle
+// gt.forEach(cb);          ... invokes cb callback on each inserted data object in the tree
+// ---
+// gt.dump();               ... text dump of the tree (for debugging / testing // purposes)
+
 var RBTree = require('./red-black');
 var curve = require('./z-curve');
 
@@ -97,13 +109,13 @@ GeoTree.prototype.find = function(arg1, arg2) {
   return res;
 };
 
-GeoTree.prototype.dump = function() {
-  this.tree.dump();
-};
-
 // callback: function(data) { ... }
 GeoTree.prototype.forEach = function(callback) {
   this.tree.forEach(function(item) { callback(item.data); });
+};
+
+GeoTree.prototype.dump = function() {
+  this.tree.dump();
 };
 
 module.exports = GeoTree;

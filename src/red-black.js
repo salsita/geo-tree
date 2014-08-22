@@ -1,3 +1,16 @@
+// red-black tree implementation
+//
+// public API of RBTree:
+// ---
+// var rbt = new RBTree();  ... creates empty tree
+// rbt.insert(...);         ... inserts (array of) (numeric)key-(any)value pair(s)
+// rtb.find(start, end);    ... retuns array of values with respective keys in provided range
+// rtb.forEach(cb);         ... in-order invocation of cb(value,key) on each item in the tree
+// ---
+// rbt.dump();              ... text dump of the tree (for debugging / testing purposes)
+//
+
+
 var RED = 0, BLACK = 1;
 
 // --- NODE ---
@@ -36,11 +49,11 @@ function RBTree() {
   this.root = null;
 }
 
-// supported args (key always is numeric!):
-// { key: ..., value: ... }  - single object
-// [ { key: ..., value: ... }, ... ]  - array of the above objects
-// key  - 1 arg, value not provided
-// key, value  - 2 args
+// supported args (key is always numeric!):
+// { key: ..., value: ... }  -- single object
+// [ { key: ..., value: ... }, ... ]  -- array of the above objects
+// key  -- 1 arg, value not provided
+// key, value  -- 2 args
 RBTree.prototype.insert = function(arg1, arg2) {
   if ('number' === typeof(arg1)) { this._insert(arg1, arg2); }
   else if ('object' === typeof(arg1)) {
@@ -122,7 +135,7 @@ RBTree.prototype.find = function(start, end) {
   var node, stack = [this.root];
   while (stack.length) {
     node = stack.pop();
-    if (node.key >= start && node.key <= end) { res.push(node.values); }
+    if (node.key >= start && node.key <= end) { res = res.concat(node.values); }
     if (node.right && node.key < end) { stack.push(node.right); }
     if (node.left && node.key > start) { stack.push(node.left); }
   }
@@ -133,8 +146,8 @@ RBTree.prototype.forEach = function(callback) {
   function dfs(node) {
     if (!node) { return; }
     dfs(node.left);
-    var ref = node.values;
-    for (var i = 0; i < ref.length; i++) { callback(ref[i]); }
+    var ref = node.values, key = node.key;
+    for (var i = 0; i < ref.length; i++) { callback(ref[i], key); }
     dfs(node.right);
   }
   dfs(this.root);
