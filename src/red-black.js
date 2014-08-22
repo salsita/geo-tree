@@ -131,7 +131,7 @@ RBTree.prototype.find = function(start, end) {
 
 RBTree.prototype.forEach = function(callback) {
   function dfs(node) {
-    if (!node) return;
+    if (!node) { return; }
     dfs(node.left);
     var ref = node.values;
     for (var i = 0; i < ref.length; i++) { callback(ref[i]); }
@@ -146,13 +146,12 @@ RBTree.prototype.forEach = function(callback) {
 // [ { key: ..., value: ... }, ... ]  - array of the above objects
 // key  - 1 arg, value not provided
 // key, value  - 2 args
-RBTree.prototype.remove = function(arg1, arg2) {
+// RBTree.prototype.remove = function(arg1, arg2) {
   // TODO
-};
+// };
 
-RBTree.prototype._remove = function(key) {
-
-};
+// RBTree.prototype._remove = function(key) {
+// };
 
 RBTree.prototype.dump = function() {
   function dumpNode(node, indent) {

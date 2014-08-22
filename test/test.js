@@ -25,7 +25,7 @@ console.log('\n------------------------------------------------------------\n');
 var RBTree = require('../node.js/red-black');
 tree = new RBTree();
 
-for (i = 10; i > 0; i--) { tree.insert(i, i); }
+for (var i = 10; i > 0; i--) { tree.insert(i, i); }
 tree.dump();
 console.log('\nforEach test:');
 tree.forEach(function(value) { console.log('data:', value); });

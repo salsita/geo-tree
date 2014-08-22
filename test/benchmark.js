@@ -2,7 +2,7 @@ var RBTree = require('../node.js/red-black');
 var N = 1 << 20;
 
 function benchmark(name, data, sort) {
-  var ts_start, ts_end, tree = new RBTree();
+  var i, ts_start, ts_end, tree = new RBTree();
   console.log('\ndistribution "' + name + '":');
   // insert
   ts_start = new Date();
@@ -11,12 +11,12 @@ function benchmark(name, data, sort) {
   console.log('insert (1M) ... ' + (ts_end - ts_start) + 'ms');
   // find one
   ts_start = new Date();
-  for (var i = 0; i < N/4; i++) tree.find(i * 4);
+  for (i = 0; i < N/4; i++) { tree.find(i * 4); }
   ts_end = new Date();
   console.log('find-one (250k) ... ' + (ts_end - ts_start) + 'ms');
   // find range
   ts_start = new Date();
-  for (var i = 0; i < N/1024; i++) tree.find(i * 1024, i * 1024 + 10240);
+  for (i = 0; i < N/1024; i++) { tree.find(i * 1024, i * 1024 + 10240); }
   ts_end = new Date();
   console.log('find-range (1k x 10k) ... ' + (ts_end - ts_start) + 'ms');
   //
@@ -26,15 +26,15 @@ function benchmark(name, data, sort) {
 var i, arr;
 
 arr = [];
-for (i = 0; i < N; i++) arr.push({key:i});
+for (i = 0; i < N; i++) { arr.push({key:i}); }
 benchmark('linear', arr);
 
 arr = [];
-for (i = 0; i < N; i++) arr.push({key: Math.floor(Math.random() * N)});
+for (i = 0; i < N; i++) { arr.push({key: Math.floor(Math.random() * N)}); }
 benchmark('random', arr);
 
 arr = [];
-for (i = 0; i < N-1; i++) arr.push(i);
+for (i = 0; i < N-1; i++) { arr.push(i); }
 var _arr = [], step = N, idx;
 while (step > 1) {
   idx = step/2 - 1;
@@ -66,8 +66,8 @@ ts_end = new Date();
 console.log('data (1M) inserted into geo tree: ' + (ts_end - ts_start) + 'ms');
 
 var j, d;
-for (d = 0; d < 4; d++)
-for (j = 0; j < 3; j++)
+for (d = 0; d < 4; d++) {
+for (j = 0; j < 3; j++) {
 for (i = 0; i < 3; i++) {
 ts_start = new Date();
 tree.find({ lat: 10.0 + (160.0/2) * i - 90.0, lng: 20.0 + (320.0/2) * j -180.0 }, 1.0+d*3.0);
@@ -75,4 +75,4 @@ ts_end = new Date();
 console.log('find({ lat: ' + (10.0 + (160.0/2) * i - 90.0)  + ', lng: ' +
                              (20.0 + (320.0/2) * j - 180.0) + ' }, r = ' +
                              (1.0+d*3.0) + '): ' + (ts_end - ts_start) + 'ms');
-}
+} } }

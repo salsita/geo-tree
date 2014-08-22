@@ -95,7 +95,7 @@ GeoTree.prototype.find = function(arg1, arg2) {
     }
   }
   return res;
-}
+};
 
 GeoTree.prototype.dump = function() {
   this.tree.dump();
