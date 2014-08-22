@@ -51,7 +51,7 @@ GeoTree.prototype.insert = function(arg1, arg2, arg3) {
 // { lat: ..., lng: ... }, { lat: ..., lng: ... }  - rectangle
 // { lat: ..., lng: ... }, radius (in angles)  - circle
 GeoTree.prototype.find = function(arg1, arg2) {
-  var all, radius, _ref;
+  var all, radius;
   all = (0 === arguments.length);
   if (undefined === arg2) { arg2 = arg1; }
   if ('number' === typeof(arg2)) { radius = arg2; }
@@ -77,32 +77,26 @@ GeoTree.prototype.find = function(arg1, arg2) {
   }
   var candidates = this.tree.find(minIdx, maxIdx);
   var i, j, item, lat, lng, res = [];
-  if (all) {
-    for (i = 0; i < candidates.length; i++) {
-      item = candidates[i];
-      for (j = 0; j < item.length; j++) { res.push(item[j].data); }
-    }
-  } else {
+  if (all) { for (i = 0; i < candidates.length; i++) { res.push(candidates[i].data); } }
+  else {
     if (undefined === radius) {
       // rectangle
       for (i = 0; i < candidates.length; i++) {
-        _ref = (item = candidates[i])[0];
-        lat = _ref.lat;
-        lng = _ref.lng;
+        item = candidates[i];
+        lat = item.lat;
+        lng = item.lng;
         if (minLat <= lat && lat <= maxLat && minLng <= lng && lng <= maxLng) {
-          for (j = 0; j < item.length; j++) { res.push(item[j].data); }
+          res.push(item.data);
         }
       }
     } else {
       // circle
       var radius2 = radius * radius;
       for (i = 0; i < candidates.length; i++) {
-        _ref = (item = candidates[i])[0];
-        lat = arg1.lat - _ref.lat;
-        lng = arg1.lng - _ref.lng;
-        if (lat * lat + lng * lng <= radius2) {
-          for (j = 0; j < item.length; j++) { res.push(item[j].data); }
-        }
+        item = candidates[i];
+        lat = arg1.lat - item.lat;
+        lng = arg1.lng - item.lng;
+        if (lat * lat + lng * lng <= radius2) { res.push(item.data); }
       }
     }
   }

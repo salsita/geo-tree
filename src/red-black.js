@@ -135,11 +135,17 @@ RBTree.prototype.find = function(start, end) {
   var node, stack = [this.root];
   while (stack.length) {
     node = stack.pop();
-    if (node.key >= start && node.key <= end) { res = res.concat(node.values); }
+    if (node.key >= start && node.key <= end) { res.push(node.values); }
     if (node.right && node.key < end) { stack.push(node.right); }
     if (node.left && node.key > start) { stack.push(node.left); }
   }
-  return res;
+  // flatten res:
+  var flatRes = [], i, j, _ref;
+  for (i = 0; i < res.length; i++) {
+    _ref = res[i];
+    for (j = 0; j < _ref.length; j++) { flatRes.push(_ref[j]); }
+  }
+  return flatRes;
 };
 
 RBTree.prototype.forEach = function(callback) {

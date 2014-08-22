@@ -1,4 +1,4 @@
-var GeoTree = require('../node.js/geo-tree');
+var GeoTree = require('../src/geo-tree');
 
 var data = [
   {lat: 50.0791306, lng:14.4293712, data: 'Prague'},
@@ -22,7 +22,7 @@ tree.forEach(function(value) { console.log('data:', value); });
 
 console.log('\n------------------------------------------------------------\n');
 
-var RBTree = require('../node.js/red-black');
+var RBTree = require('../src/red-black');
 tree = new RBTree();
 
 for (var i = 10; i > 0; i--) { tree.insert(i, i); }

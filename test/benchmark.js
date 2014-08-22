@@ -1,4 +1,4 @@
-var RBTree = require('../node.js/red-black');
+var RBTree = require('../src/red-black');
 var N = 1 << 20;
 
 function benchmark(name, data, sort) {
@@ -45,7 +45,7 @@ benchmark('binarized', _arr);
 
 console.log('\n------------------------------------------------------------\n');
 
-var GeoTree = require('../node.js/geo-tree');
+var GeoTree = require('../src/geo-tree');
 var tree = new GeoTree();
 var ts_start, ts_end;
 
