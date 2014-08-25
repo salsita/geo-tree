@@ -172,17 +172,21 @@ RBTree.prototype.forEach = function(callback) {
 // RBTree.prototype._remove = function(key) {
 // };
 
-RBTree.prototype.dump = function() {
+// silent = true ... return string, else use console.log()
+RBTree.prototype.dump = function(silent) {
+  var res = '';
   function dumpNode(node, indent) {
     if (!node) { return; }
-    console.log(((undefined !== indent) ? indent + '+ ' : '') + node.dump());
+    if (silent) { res += node.dump(); }
+    else { console.log(((undefined !== indent) ? indent + '+ ' : '') + node.dump()); }
     var s = (undefined === indent) ? '' : (indent + '  ');
     dumpNode(node.left, s);
     dumpNode(node.right, s);
   }
-  console.log('--- dump start ---');
+  if (!silent) { console.log('--- dump start ---'); }
   dumpNode(this.root);
-  console.log('--- dump end ---');
+  if (!silent) { console.log('--- dump end ---'); }
+  return res;
 };
 
 module.exports = RBTree;

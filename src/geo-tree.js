@@ -76,7 +76,7 @@ GeoTree.prototype.find = function(arg1, arg2) {
                         Math.round((maxLng + 180.0) * 100000));
   }
   var candidates = this.tree.find(minIdx, maxIdx);
-  var i, j, item, lat, lng, res = [];
+  var i, item, lat, lng, res = [];
   if (all) { for (i = 0; i < candidates.length; i++) { res.push(candidates[i].data); } }
   else {
     if (undefined === radius) {

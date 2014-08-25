@@ -12,9 +12,15 @@ module.exports = function(grunt) {
       }
     },
 
-    mochaTest: {
-      options: { colors: true, reporter: 'spec' },
-      files: ['test/*.spec.js']
+    mocha_istanbul: {
+      coverage: {
+        src: 'test',
+        options: {
+          mask: '*.spec.js',
+          reportFormats: ['text'],
+          coverageFolder: 'test/coverage'
+        }
+      }
     },
 
     browserify: {
@@ -46,11 +52,12 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-symlink');
+  grunt.loadNpmTasks('grunt-mocha-istanbul');
 
-  grunt.registerTask('default', ['jshint', 'mochaTest', 'browserify', 'uglify', 'symlink']);
+  grunt.registerTask('default', ['test', 'browserify', 'uglify', 'symlink']);
+  grunt.registerTask('test', ['jshint', 'mocha_istanbul']);
 
 };
