@@ -5,7 +5,8 @@ creating a set of map-related objects (i.e. each of them having its latitude,
 longitude and data), followed with a queries to find objects in given area
 (exact match / rectangular area / circle area).
 
-The existing code we used for this purpose originally was not performant enough
+The existing code we used for this purpose originally (that was part of (one of
+the many available) google map directives) was not performant enough
 (it scanned the whole set of objects sequentially each time), so our goal was to
 speed the find queries using some clever data structures and algorithms.
 
