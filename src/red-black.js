@@ -99,7 +99,7 @@ RBTree.prototype._insert = function(/* number */ key, value) {
       n = g; p = n.parent; g = n.getGrand(); u = n.getUncle();
       continue;
     }
-    // n RED, p RED, u BLACK, g BLACK
+    // n RED, p RED, (u BLACK), g BLACK
     if (n === p.right && p === g.left) {
       g.left = n; n.parent = g;
       if (p.right = n.left) { n.left.parent = p; }

@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       options: grunt.file.readJSON('.jshintrc'), // see http://www.jshint.com/docs/options/
       all: {
         src: ['package.json', '.jshintrc', 'Gruntfile.js',
-              'src/**/*.js', 'test/**/*.js']
+              'src/**/*.js', 'test/**/*.js', '!test/coverage/*']
       }
     },
 
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         src: 'test',
         options: {
           mask: '*.spec.js',
-          reportFormats: ['text'],
+          reportFormats: ['text','html'],
           coverageFolder: 'test/coverage'
         }
       }
