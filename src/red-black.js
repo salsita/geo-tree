@@ -4,7 +4,7 @@
 // ---
 // var rbt = new RBTree();  ... creates empty tree
 // rbt.insert(...);         ... inserts (array of) (numeric)key-(any)value pair(s)
-// rtb.find(start, end);    ... retuns array of values with respective keys in provided range
+// rtb.find(...);           ... retuns array of values with respective keys in provided range
 // rtb.forEach(cb);         ... in-order invocation of cb(value,key) on each item in the tree
 // ---
 // rbt.dump();              ... text dump of the tree (for debugging / testing purposes)
@@ -128,6 +128,10 @@ RBTree.prototype._insert = function(/* number */ key, value) {
   }
 };
 
+
+// supported args:
+// key  -- single numeric value, exact match
+// start, end  -- two numberic values defining search range
 RBTree.prototype.find = function(start, end) {
   if (!this.root) { return []; }
   if (end === undefined) { end = start; }
@@ -156,6 +160,7 @@ RBTree.prototype.forEach = function(callback) {
     for (var i = 0; i < ref.length; i++) { callback(ref[i], key); }
     dfs(node.right);
   }
+  if (!callback) { return; }
   dfs(this.root);
 };
 
