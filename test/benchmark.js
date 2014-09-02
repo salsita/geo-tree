@@ -1,3 +1,10 @@
+// Usage: node benchmark
+//
+// Some benchmark tests to make sure some code "improvement" doesn't affect
+// performance. If it does --> rollback the changes and try to implement the new
+// functionality in some other way...
+
+
 var RBTree = require('../src/red-black');
 var N = 1 << 20;
 

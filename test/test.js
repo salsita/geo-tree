@@ -1,3 +1,7 @@
+// Usage: node test
+//
+// Arbitrary tests, playground for testing new functions.
+
 var GeoTree = require('../src/geo-tree');
 
 var data = [
