@@ -152,6 +152,7 @@ RBTree.prototype.find = function(start, end) {
   return flatRes;
 };
 
+// callback: function(data) { ... }
 RBTree.prototype.forEach = function(callback) {
   function dfs(node) {
     if (!node) { return; }
@@ -178,18 +179,22 @@ RBTree.prototype.forEach = function(callback) {
 // };
 
 // silent = true ... return string, else use console.log()
+// not unit-testing !silent branches (using console.log)
 RBTree.prototype.dump = function(silent) {
   var res = '';
   function dumpNode(node, indent) {
     if (!node) { return; }
+    /* istanbul ignore else */
     if (silent) { res += node.dump(); }
     else { console.log(((undefined !== indent) ? indent + '+ ' : '') + node.dump()); }
     var s = (undefined === indent) ? '' : (indent + '  ');
     dumpNode(node.left, s);
     dumpNode(node.right, s);
   }
+  /* istanbul ignore if */
   if (!silent) { console.log('--- dump start ---'); }
   dumpNode(this.root);
+  /* istanbul ignore if */
   if (!silent) { console.log('--- dump end ---'); }
   return res;
 };

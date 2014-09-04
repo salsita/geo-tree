@@ -105,11 +105,13 @@ GeoTree.prototype.find = function(arg1, arg2) {
 
 // callback: function(data) { ... }
 GeoTree.prototype.forEach = function(callback) {
+  if (!callback) { return; }
   this.tree.forEach(function(item) { callback(item.data); });
 };
 
-GeoTree.prototype.dump = function() {
-  this.tree.dump();
+// silent = true ... return string, else use console.log()
+GeoTree.prototype.dump = function(silent) {
+  return this.tree.dump(silent);
 };
 
 module.exports = GeoTree;

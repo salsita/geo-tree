@@ -169,5 +169,4 @@ describe('red-black module', function() {
     log.forEach(function(val, idx) { assert.equal(expect[idx], val); });
   });
 
-
 });
