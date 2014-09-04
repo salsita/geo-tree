@@ -12,7 +12,7 @@ speed the find queries using some clever data structures and algorithms.
 
 After some prototyping and testing, we decided to wrap our `GeoTree`
 implementation around red-black binary search trees using z-curve algorithm for
-convering 2D plane coordinates into scalar index (and using this index as the
+converting 2D plane coordinates into scalar index (and using this index as the
 numeric key in underlaying red-black tree).
 
 ## Build steps
@@ -27,9 +27,9 @@ TODO.
 
 Soon(-ish), we plan to add suport for:
 
-* remove opration (i.e. removing objects from the sets)
+* `remove` opration (i.e. removing geo objects from the sets)
 * cluster calculation
 
 ## Change-log
 
-* 0.1.0 (2014-08-25): initial version (`insert` and `find` operations)
+* 0.1.0 (2014-09-04): initial version (`insert`, `find` and `forEach` operations)
