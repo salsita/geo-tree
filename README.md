@@ -20,7 +20,7 @@ we can eliminate a lot of items for which we know in advance that we don't need
 to consider them based on provided search criteria.
 
 So when using hundreds or thousands or even more objects in your map application
-and hitting performance issues, may find this library very useful.
+and having performance issues, may find this library very useful.
 
 ## Installation
 
@@ -40,7 +40,7 @@ built library into your html:
     <script src="geo-tree.min.js" type="text/javascript"></script>
 
 And then you can use `window.GeoTree` constructor function that is exported by
-the library the same was as in `node.js`:
+the library the same way as in `node.js`:
 
     <script>
       var gt = new GeoTree();
@@ -53,7 +53,7 @@ name, see the build procedure below...
 ## Build procedure
 
 If you want to build the library (that can be used as `<script>` tag in your
-HTML code from the `node.js` sources, make sure you have `grunt` client
+HTML code) from the `node.js` sources, make sure you have `grunt` client
 installed along with `nmp` utility. Then issue:
 
     $ npm install
@@ -73,14 +73,15 @@ The code is unit tested using `mocha` testing framework together with unit test
 coverage tool `istanbul`. All `.spec.js` files are in `test` directory.
 
 There are also two more files in `test` directory:
-* `benchmark.js`: there are some performance related tests, I use this to make
-  sure code updates don't have any negative impact on performance, and
+* `benchmark.js`: there are some performance related tests, I use them to make
+  sure code updates don't have any negative impacts on performance, and
 * `test.js`: where I test ideas, API, ...
-These tests are started in `node`.
+
+These tests are executed in `node`.
 
 The unit test coverage reports are generated into `test/coverage` directory, so
-when editing / building the library yourself, make sure tests still pass, or
-that you actually add unit tests for new functionality as needed.
+when editing / adding new features to the library yourself, make sure tests still
+pass, or that you actually add unit tests for new functionality as needed.
 
 ## API
 
@@ -89,7 +90,7 @@ that you actually add unit tests for new functionality as needed.
 The `GeoTree` constructor function is the only exported object for both `node`
 and standalone browser library versions.
 
-So in node, you get access to it as:
+So in `node`, you get access to it as:
 
     var GeoTree = require('geo-tree');
 
@@ -129,7 +130,7 @@ Function `insert()` can be invoked with single parameter: object
 So you would invoke it 3 times to insert the above 3 items, inserting one each
 time, e.g. to insert Paris, you'd do:
 
-    set.insert({lat: 48.85886, lng:  2.34706, data: 'Paris, France'});
+    set.insert({lat: 48.85886, lng: 2.34706, data: 'Paris, France'});
 
 For bulk insert, you can pass an array of the above mentioned objects, they will
 be inserted sequentially. So to insert all 3 of them in one `insert()`
@@ -197,9 +198,9 @@ callback, passing `data` field of the item.
          Berlin, Germany
     */
 
-Same as for `find()` method: the order passed `data` items to the callback is
-determined by underlaying red-black tree structure, do not expect to see the
-callbacks invoked in any particular order.
+Same as for the `find()` method: the order passed `data` items to the callback
+is determined by underlaying red-black tree structure, so do not expect to see
+the callbacks invoked in any particular order.
 
 ### For debugging: dump    
 
