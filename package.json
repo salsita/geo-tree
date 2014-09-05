@@ -17,5 +17,25 @@
   },
   "engines": {
     "node": ">= 0.8.0"
+  },
+  "main": "src/geo-tree.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:roman-kaspar/geo-tree.git"
+  },
+  "keywords": [
+    "javascript",
+    "geo tree",
+    "red-black tree",
+    "Z curve",
+    "node.js"
+  ],
+  "author": "Roman Kaspar <roman@salsitasoft.com> (https://salsitasoft.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roman-kaspar/geo-tree/issues"
   }
 }
