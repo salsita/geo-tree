@@ -178,11 +178,19 @@ arguments are treated as two diagonal vertices of a rectangle).
     set.find({lat: 45, lng: 0}, {lat: 55, lng: 14});
     // --> ['Paris, France', 'Berlin, Germany']
 
-Finally, you can pass one `lat`/`lng` object and a float number, these two
-making up a circle (with provided center and (angle-)radius) in which you search
-for the items.
+Finally, you can pass one `lat`/`lng` object, a float number, and optionally a
+string. These parameters are making up a circle (with provided center and
+radius) in which you search for the items. If you don't provide the third string
+argument, the units for the provided radius value are native to latitude and
+longitude (i.e. angle degrees). If you want to specify different units for
+radius, select one of the following: `m` for meters, `km` for kilometers, `yd`
+for yards, and `mi` for miles. In case you pass any other string, it is ignored
+and the value is not converted.
 
     set.find({lat: 51, lng: 14}, 2.0);
+    // --> ['Prague, Czech Republic', 'Berlin, Germany']
+
+    set.find({lat: 51, lng: 17}, 200.0, 'mi');
     // --> ['Prague, Czech Republic', 'Berlin, Germany']
 
 ### Iteration over all items

@@ -18,6 +18,15 @@ function createTestSet() {
   ]);
 }
 
+function createDistTestSet() {
+  gt.insert([
+    {lat: 50.0755, lng: 14.4378, data: 'Praha'},  // dist: Brno: 184.538km, Ostrava: 275.401km, Plzen: 85.023km
+    {lat: 49.1951, lng: 16.6068, data: 'Brno'},   // dist: Ostrava: 138.475km, Plzen: 241.577km
+    {lat: 49.8209, lng: 18.2625, data: 'Ostrava'},// dist: Plzen: 351.482km
+    {lat: 49.7384, lng: 13.3736, data: 'Plzen'}   //
+  ]);
+}
+
 function addLog(element) {
   log.push(element);
 }
@@ -119,6 +128,46 @@ describe('geo-tree module', function() {
     createTestSet();
     var res = gt.find({lat: 5.0, lng: 5.0}, 4.0).sort();
     assert.equal(res.length, 0);
+  });
+
+  it('find (circle search: units: m)', function() {
+    createDistTestSet();
+    var res = gt.find({lat: 50.0755, lng: 14.4378}, 200000.0, 'm').sort();
+    var expect = ['Brno', 'Plzen', 'Praha'];
+    assert.equal(res.length, expect.length);
+    expect.forEach(function(val, idx) { assert.equal(res[idx], val); });
+  });
+
+  it('find (circle search: units: km)', function() {
+    createDistTestSet();
+    var res = gt.find({lat: 49.1951, lng: 16.6068}, 200.0, 'km').sort();
+    var expect = ['Brno', 'Ostrava', 'Praha'];
+    assert.equal(res.length, expect.length);
+    expect.forEach(function(val, idx) { assert.equal(res[idx], val); });
+  });
+
+  it('find (circle search: units: yd)', function() {
+    createDistTestSet();
+    var res = gt.find({lat: 49.8209, lng: 18.2625}, 153106.0, 'yd').sort();
+    var expect = ['Brno', 'Ostrava'];
+    assert.equal(res.length, expect.length);
+    expect.forEach(function(val, idx) { assert.equal(res[idx], val); });
+  });
+
+  it('find (circle search: units: mi)', function() {
+    createDistTestSet();
+    var res = gt.find({lat: 49.7384, lng: 13.3736}, 56.0, 'mi').sort();
+    var expect = ['Plzen', 'Praha'];
+    assert.equal(res.length, expect.length);
+    expect.forEach(function(val, idx) { assert.equal(res[idx], val); });
+  });
+
+  it('find (circle search: units: unknown)', function() {
+    createDistTestSet();
+    var res = gt.find({lat: 50.0755, lng: 14.4378}, 2.8, 'hello world').sort();
+    var expect = ['Brno', 'Plzen', 'Praha'];
+    assert.equal(res.length, expect.length);
+    expect.forEach(function(val, idx) { assert.equal(res[idx], val); });
   });
 
   //

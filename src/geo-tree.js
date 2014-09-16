@@ -13,6 +13,26 @@
 var RBTree = require('./red-black');
 var curve = require('./z-curve');
 
+// --- helper functions ---
+
+// WARNING: the conversion will work well only for small distances
+function convertToAngle(lat, val, units) {
+  var conversionTable = [
+    { units: 'm', ratio: 1.0 },
+    { units: 'km', ratio: 1000.0 },
+    { units: 'yd', ratio: 0.9144 },
+    { units: 'mi', ratio: 1609.34 }
+  ];
+  for (var i = 0; i < conversionTable.length; i++) {
+    if (conversionTable[i].units === units) { break; }
+  }
+  if (conversionTable.length === i) { return val; }
+  var angle = (val * conversionTable[i].ratio) / (6378137.0 * Math.cos(Math.PI * lat / 180.0));
+  return angle * 180.0 / Math.PI;
+}
+
+// --- end of helper functions ---
+
 function GeoTree() {
   this.tree = new RBTree();
 }
@@ -50,11 +70,12 @@ GeoTree.prototype.insert = function(arg1, arg2, arg3) {
 // { lat: ..., lng: ... }  - return exact match
 // { lat: ..., lng: ... }, { lat: ..., lng: ... }  - rectangle
 // { lat: ..., lng: ... }, radius (in angles)  - circle
-GeoTree.prototype.find = function(arg1, arg2) {
+// { lat: ..., lng: ... }, radius, units (m, km, yd, mi) - circle
+GeoTree.prototype.find = function(arg1, arg2, arg3) {
   var all, radius;
   all = (0 === arguments.length);
   if (undefined === arg2) { arg2 = arg1; }
-  if ('number' === typeof(arg2)) { radius = arg2; }
+  if ('number' === typeof(arg2)) { radius = convertToAngle(arg1.lat, arg2, arg3); }
   var minLat, maxLat, minLng, maxLng, minIdx = -Infinity, maxIdx = Infinity;
   if (!all) {
     if (undefined === radius) {
