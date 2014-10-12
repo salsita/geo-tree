@@ -15,20 +15,55 @@ var curve = require('./z-curve');
 
 // --- helper functions ---
 
-// WARNING: the conversion will work well only for small distances
-function convertToAngle(lat, val, units) {
+function getValidationFn(center, dist, units) {
+
+  function toDeg(rad) { return rad * 180.0 / Math.PI; }
+  function toRad(deg) { return deg * Math.PI / 180.0; }
+
+  // mean Earth radius (http://en.wikipedia.org/wiki/Earth_radius#Mean_radius)
+  var R = 6371009.0;  // in meters
+  // meter to X
   var conversionTable = [
     { units: 'm', ratio: 1.0 },
     { units: 'km', ratio: 1000.0 },
     { units: 'yd', ratio: 0.9144 },
     { units: 'mi', ratio: 1609.34 }
   ];
+
   for (var i = 0; i < conversionTable.length; i++) {
     if (conversionTable[i].units === units) { break; }
   }
-  if (conversionTable.length === i) { return val; }
-  var angle = (val * conversionTable[i].ratio) / (6378137.0 * Math.cos(Math.PI * lat / 180.0));
-  return angle * 180.0 / Math.PI;
+
+  // in angle degrees already
+  if (conversionTable.length === i) {
+    var radius2 = dist * dist;
+    return {
+      angle: dist,
+      validate: function(coord) {
+        var dlat = center.lat - coord.lat;
+        var dlng = center.lng - coord.lng;
+        return (dlat * dlat + dlng * dlng <= radius2);
+      }
+    };
+  }
+
+  // distance-based
+  var adjustedDist = dist * conversionTable[i].ratio;  // in meters
+  return {
+    angle: toDeg(adjustedDist / (R * Math.cos(toRad(center.lat)))),
+    validate: function(coord) {
+      // Haversine algo (http://mathforum.org/library/drmath/view/51879.html)
+      var dlat = toRad(center.lat - coord.lat);
+      var dlng = toRad(center.lng - coord.lng);
+      var sin_dlat_2 = Math.sin(dlat/2);
+      var sin_dlng_2 = Math.sin(dlng/2);
+      var cos_ce_lat = Math.cos(toRad(center.lat));
+      var cos_co_lat = Math.cos(toRad(coord.lat));
+      var a = sin_dlat_2 * sin_dlat_2 + cos_ce_lat * cos_co_lat * sin_dlng_2 * sin_dlng_2;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return (R * c <= adjustedDist);
+    }
+  };
 }
 
 // --- end of helper functions ---
@@ -72,10 +107,14 @@ GeoTree.prototype.insert = function(arg1, arg2, arg3) {
 // { lat: ..., lng: ... }, radius (in angles)  - circle
 // { lat: ..., lng: ... }, radius, units (m, km, yd, mi) - circle
 GeoTree.prototype.find = function(arg1, arg2, arg3) {
-  var all, radius;
+  var all, radius, validate;
   all = (0 === arguments.length);
   if (undefined === arg2) { arg2 = arg1; }
-  if ('number' === typeof(arg2)) { radius = convertToAngle(arg1.lat, arg2, arg3); }
+  if ('number' === typeof(arg2)) {
+    var _tmp = getValidationFn(arg1, arg2, arg3);
+    radius = _tmp.angle;
+    validate = _tmp.validate;
+  }
   var minLat, maxLat, minLng, maxLng, minIdx = -Infinity, maxIdx = Infinity;
   if (!all) {
     if (undefined === radius) {
@@ -112,12 +151,9 @@ GeoTree.prototype.find = function(arg1, arg2, arg3) {
       }
     } else {
       // circle
-      var radius2 = radius * radius;
       for (i = 0; i < candidates.length; i++) {
         item = candidates[i];
-        lat = arg1.lat - item.lat;
-        lng = arg1.lng - item.lng;
-        if (lat * lat + lng * lng <= radius2) { res.push(item.data); }
+        if (validate(item)) { res.push(item.data); }
       }
     }
   }

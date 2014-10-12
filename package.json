@@ -1,6 +1,6 @@
 {
   "name": "geo-tree",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "High performance library for map-related operations",
   "export-symbol": "GeoTree",
   "dependencies": {},

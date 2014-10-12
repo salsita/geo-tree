@@ -83,3 +83,26 @@ console.log('find({ lat: ' + (10.0 + (160.0/2) * i - 90.0)  + ', lng: ' +
                              (20.0 + (320.0/2) * j - 180.0) + ' }, r = ' +
                              (1.0+d*3.0) + '): ' + (ts_end - ts_start) + 'ms');
 } } }
+
+console.log('\n------------------------------------------------------------\n');
+
+var res;
+ts_start = new Date();
+res = tree.find({lat: 0.0, lng: 0.0}, 5.0);
+ts_end = new Date();
+console.log('find({ lat: 0.0, lng: 0.0 }, 5.0): ' + (ts_end - ts_start) + 'ms, res.length: ' + res.length);
+ts_start = new Date();
+res = tree.find({lat: 0.0, lng: 0.0}, 556.6, 'km');
+ts_end = new Date();
+console.log('find({ lat: 0.0, lng: 0.0 }, 556.6, "km"): ' + (ts_end - ts_start) + 'ms, res.length: ' + res.length);
+
+console.log('\n');
+
+ts_start = new Date();
+res = tree.find({lat: 50.0, lng: 0.0}, 5.0);
+ts_end = new Date();
+console.log('find({ lat: 50.0, lng: 0.0 }, 5.0): ' + (ts_end - ts_start) + 'ms, res.length: ' + res.length);
+ts_start = new Date();
+res = tree.find({lat: 50.0, lng: 0.0}, 556.6, 'km');
+ts_end = new Date();
+console.log('find({ lat: 50.0, lng: 0.0 }, 556.6, "km"): ' + (ts_end - ts_start) + 'ms, res.length: ' + res.length);

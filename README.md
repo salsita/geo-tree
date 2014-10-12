@@ -227,4 +227,5 @@ Soon(-ish), we plan to add suport for:
 ## Change-log
 
 * 0.1.0 (2014-09-04): initial version (`insert`, `find` and `forEach` operations)
-* 0.1.0 (2014-09-16): support for m/km/yd/mi radius value for circle-search operation
+* 0.1.1 (2014-09-16): support for m/km/yd/mi radius value for circle-search operation
+* 0.1.2 (2014-10-12): Haversine function for radius verifications
