@@ -1,6 +1,6 @@
 {
   "name": "geo-tree",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "High performance library for map-related operations",
   "export-symbol": "GeoTree",
   "dependencies": {},
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:roman-kaspar/geo-tree.git"
+    "url": "git@github.com:salsita/geo-tree.git"
   },
   "keywords": [
     "javascript",
@@ -36,6 +36,6 @@
   "author": "Roman Kaspar <roman@salsitasoft.com> (https://salsitasoft.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/roman-kaspar/geo-tree/issues"
+    "url": "https://github.com/salsita/geo-tree/issues"
   }
 }
