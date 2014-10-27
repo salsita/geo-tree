@@ -53,11 +53,11 @@ name, see the build procedure below...
 ## Build procedure
 
 If you want to build the library (that can be used as `<script>` tag in your
-HTML code) from the `node.js` sources, make sure you have `grunt` client
+HTML code) from the `node.js` sources, make sure you have `gulp` client
 installed along with `nmp` utility. Then issue:
 
     $ npm install
-    $ grunt
+    $ gulp
 
 This will build you the library and its minified version into `lib` directory.
 
