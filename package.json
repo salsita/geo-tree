@@ -1,26 +1,25 @@
 {
   "name": "geo-tree",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "High performance library for map-related operations",
   "export-symbol": "GeoTree",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.10.0",
-    "browserify": "~3.39.0",
-    "grunt-browserify": "~2.0.3",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-symlink": "~0.3.0",
-    "mocha": "^1.21.4",
-    "istanbul": "^0.3.0",
-    "grunt-mocha-istanbul": "^2.0.0"
+    "gulp": "^3.8.9",
+    "gulp-jshint": "^1.8.5",
+    "gulp-istanbul": "^0.3.1",
+    "gulp-mocha": "^1.1.1",
+    "gulp-browserify": "^0.5.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1",
+    "gulp-sym": "0.0.14"
   },
   "engines": {
     "node": ">= 0.8.0"
   },
   "main": "src/geo-tree.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,7 @@
     "javascript",
     "geo tree",
     "red-black tree",
-    "Z curve",
+    "Z-order curve",
     "node.js"
   ],
   "author": "Roman Kaspar <roman@salsitasoft.com> (https://salsitasoft.com/)",
