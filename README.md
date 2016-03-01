@@ -26,7 +26,7 @@ and having performance issues, may find this library very useful.
 
 In `node.js` environment, just do the usual:
 
-    npm install geo-node --save
+    npm install geo-tree --save
 
 Since that moment on, you can use it as:
 
