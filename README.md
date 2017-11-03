@@ -1,4 +1,10 @@
-# Geo-tree library
+[![Dependency Status](https://img.shields.io/david/salsita/geo-tree.svg)](https://david-dm.org/salsita/geo-tree)
+[![devDependency Status](https://img.shields.io/david/dev/salsita/geo-tree.svg)](https://david-dm.org/salsita/geo-tree?type=dev)
+![Downloads](https://img.shields.io/npm/dm/geo-tree.svg?style=flat)
+![Licence](https://img.shields.io/npm/l/geo-tree.svg?style=flat)
+[![Known Vulnerabilities](https://snyk.io/test/github/salsita/geo-tree/badge.svg)](https://snyk.io/test/github/salsita/geo-tree)
+
+# geo-tree library
 
 Geo-tree library is a tool for working with map objects. The primary use-case is
 creating a set of map-related objects (i.e. each of them having its latitude,
