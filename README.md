@@ -34,39 +34,6 @@ and having performance issues, may find this library very useful.
 $ npm i geo-tree
 ```
 
-... and in your code:
-
-```
-const GeoTree = require('geo-tree');
-const gt = new GeoTree();
-```
-
-## Working from source code
-
-```
-$ git clone git@github.com:salsita/geo-tree.git
-$ cd geo-tree
-$ npm i
-$ npm test
-```
-
-Eslint is used for linting the source code, and jest as the test runner. The test coverage report
-is stored in `coverage` directory after testing.
-
-There are also two additional test files in `test` directory:
-* `benchmark.js`: run it before you make changes to the source code, and then after, to see
-the performance impact of your change,
-* `test.js`: playground for your new feature(s).
-
-To run them, just do
-```
-$ node test/benchmark
-```
-and 
-```
-$ node test/test
-```
-
 ## API
 
 ### Constructor
@@ -212,9 +179,35 @@ method that either prints the internal representation of the current stored set
 to the console (no argument, or falsey argument passed), or generates a string
 that describes the the tree (single truthy argument passed).
 
+## Working from source code
+
+```
+$ git clone git@github.com:salsita/geo-tree.git
+$ cd geo-tree
+$ npm i
+$ npm test
+```
+
+Eslint is used for linting the source code, and jest as the test runner. The test coverage report
+is stored in `coverage` directory after testing.
+
+There are also two additional test files in `test` directory:
+* `benchmark.js`: run it before you make changes to the source code, and then after, to see
+the performance impact of your change,
+* `test.js`: playground for your new feature(s).
+
+To run them, just do
+```
+$ node test/benchmark
+```
+and 
+```
+$ node test/test
+```
+
 ## Change-log
 
-* 1.0.0 (2017-11-03): Major rework of infrastructure (gulp no more, jest, eslint, ...)
+* 1.0.1 (2017-11-03): Major rework of infrastructure (gulp no more, jest, eslint, ...)
 * 0.1.4 (2014-10-27): Gulp build system replaced Grunt
 * 0.1.3 (2014-10-21): Repo migrated from my private account to salsita account
 * 0.1.2 (2014-10-12): Haversine function for radius verifications
