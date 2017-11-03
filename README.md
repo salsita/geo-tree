@@ -38,7 +38,7 @@ $ npm i geo-tree
 
 ### Constructor
 
-The `GeoTree` constructor function is the only exported library symbols.
+The `GeoTree` constructor function is the only exported library symbol.  
 You require it as:
 ```
 const GeoTree = require('geo-tree');
