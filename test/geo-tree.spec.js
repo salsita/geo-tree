@@ -5,26 +5,30 @@ var gt, log;
 // --- helpers ---
 
 function createTestSet() {
+  /* eslint-disable key-spacing */
   gt.insert([
-    {lat: -10.0, lng: -10.0, data: 'data1'},
-    {lat:   0.0, lng: -10.0, data: 'data2'},
-    {lat:  10.0, lng: -10.0, data: 'data3'},
-    {lat: -10.0, lng:   0.0, data: 'data4'},
-    {lat:   0.0, lng:   0.0, data: 'data5'},
-    {lat:  10.0, lng:   0.0, data: 'data6'},
-    {lat: -10.0, lng:  10.0, data: 'data7'},
-    {lat:   0.0, lng:  10.0, data: 'data8'},
-    {lat:  10.0, lng:  10.0, data: 'data9'}
+    { lat: -10.0, lng: -10.0, data: 'data1' },
+    { lat:   0.0, lng: -10.0, data: 'data2' },
+    { lat:  10.0, lng: -10.0, data: 'data3' },
+    { lat: -10.0, lng:   0.0, data: 'data4' },
+    { lat:   0.0, lng:   0.0, data: 'data5' },
+    { lat:  10.0, lng:   0.0, data: 'data6' },
+    { lat: -10.0, lng:  10.0, data: 'data7' },
+    { lat:   0.0, lng:  10.0, data: 'data8' },
+    { lat:  10.0, lng:  10.0, data: 'data9' }
   ]);
+  /* eslint-enable key-spacing */
 }
 
 function createDistTestSet() {
+  /* eslint-disable key-spacing */
   gt.insert([
-    {lat: 50.0755, lng: 14.4378, data: 'Praha'},  // dist: Brno: 184.538km, Ostrava: 275.401km, Plzen: 85.023km
-    {lat: 49.1951, lng: 16.6068, data: 'Brno'},   // dist: Ostrava: 138.475km, Plzen: 241.577km
-    {lat: 49.8209, lng: 18.2625, data: 'Ostrava'},// dist: Plzen: 351.482km
-    {lat: 49.7384, lng: 13.3736, data: 'Plzen'}   //
+    { lat: 50.0755, lng: 14.4378, data: 'Praha' },   // dist: Brno: 184.538km, Ostrava: 275.401km, Plzen: 85.023km
+    { lat: 49.1951, lng: 16.6068, data: 'Brno' },    // dist: Ostrava: 138.475km, Plzen: 241.577km
+    { lat: 49.8209, lng: 18.2625, data: 'Ostrava' }, // dist: Plzen: 351.482km
+    { lat: 49.7384, lng: 13.3736, data: 'Plzen' }    //
   ]);
+  /* eslint-enable key-spacing */
 }
 
 function addLog(element) {
@@ -33,9 +37,7 @@ function addLog(element) {
 
 // --- end of helpers ---
 
-
 describe('geo-tree module', function() {
-
   beforeEach(function() { gt = new GeoTree(); log = []; });
 
   it('should create empty tree', function() {
@@ -59,7 +61,7 @@ describe('geo-tree module', function() {
   });
 
   it('insert (single object)', function() {
-    gt.insert({lat:-90.0, lng:-180.0, data:'hello'});
+    gt.insert({lat: -90.0, lng: -180.0, data: 'hello'});
     assert.equal(gt.dump(true),
       '[k:0,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[{"idx":0,"lat":-90,"lng":-180,"data":"hello"}]]'
     );
@@ -67,8 +69,8 @@ describe('geo-tree module', function() {
 
   it('insert (array of objects)', function() {
     gt.insert([
-      {lat:-90.0, lng:-180.0, data:'hello'},
-      {lat:-90.0, lng:-180.0, data:'world'}
+      {lat: -90.0, lng: -180.0, data: 'hello'},
+      {lat: -90.0, lng: -180.0, data: 'world'}
     ]);
     assert.equal(gt.dump(true),
       '[k:0,c:B,#:2,l:NULL,r:NULL,p:NULL,v:[{"idx":0,"lat":-90,"lng":-180,"data":"hello"},' +
@@ -83,8 +85,7 @@ describe('geo-tree module', function() {
   it('find (return all)', function() {
     createTestSet();
     var res = gt.find().sort();
-    var expect = ['data1', 'data2', 'data3', 'data4', 'data5',
-                  'data6', 'data7', 'data8', 'data9'];
+    var expect = ['data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7', 'data8', 'data9'];
     assert.equal(res.length, expect.length);
     expect.forEach(function(val, idx) { assert.equal(res[idx], val); });
   });
@@ -188,11 +189,9 @@ describe('geo-tree module', function() {
   it('forEach (non-empty set, valid callback)', function() {
     createTestSet();
     gt.forEach(addLog);
-    var expect = ['data1', 'data2', 'data3', 'data4', 'data5',
-                  'data6', 'data7', 'data8', 'data9'];
+    var expect = ['data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7', 'data8', 'data9'];
     log = log.sort();
     assert.equal(log.length, expect.length);
     log.forEach(function(val, idx) { assert.equal(expect[idx], val); });
   });
-
 });

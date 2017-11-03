@@ -1,40 +1,40 @@
 {
   "name": "geo-tree",
-  "version": "0.1.4",
-  "description": "High performance library for map-related operations",
-  "export-symbol": "GeoTree",
-  "dependencies": {},
-  "devDependencies": {
-    "gulp": "^3.8.9",
-    "gulp-jshint": "^1.8.5",
-    "gulp-istanbul": "^0.3.1",
-    "gulp-mocha": "^1.1.1",
-    "gulp-browserify": "^0.5.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^1.0.1",
-    "gulp-sym": "0.0.14"
-  },
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "main": "src/geo-tree.js",
-  "scripts": {
-    "test": "gulp test"
-  },
+  "version": "1.0.0",
+  "description": "High performance library for geographical map-related operations",
+  "license": "MIT",
+  "author": "Roman Kaspar <roman@salsitasoft.com>",
   "repository": {
     "type": "git",
     "url": "git@github.com:salsita/geo-tree.git"
   },
+  "bugs": {
+    "url": "https://github.com/salsita/geo-tree/issues"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "main": "src/geo-tree.js",
+  "scripts": {
+    "test": "eslint src test && jest test/*.spec.js --coverage"
+  },
   "keywords": [
-    "javascript",
-    "geo tree",
+    "geographical",
+    "map",
+    "tree",
+    "geo-tree",
     "red-black tree",
     "Z-order curve",
     "node.js"
   ],
-  "author": "Roman Kaspar <roman@salsitasoft.com> (https://salsitasoft.com/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/salsita/geo-tree/issues"
-  }
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^21.2.1"
+  },
+  "dependencies": {}
 }

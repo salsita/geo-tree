@@ -16,7 +16,6 @@ var curve = require('./z-curve');
 // --- helper functions ---
 
 function getValidationFn(center, dist, units) {
-
   function toDeg(rad) { return rad * 180.0 / Math.PI; }
   function toRad(deg) { return deg * Math.PI / 180.0; }
 
@@ -40,9 +39,9 @@ function getValidationFn(center, dist, units) {
     return {
       angle: dist,
       validate: function(coord) {
-        var dlat = center.lat - coord.lat;
-        var dlng = center.lng - coord.lng;
-        return (dlat * dlat + dlng * dlng <= radius2);
+        var dLat = center.lat - coord.lat;
+        var dLng = center.lng - coord.lng;
+        return (dLat * dLat + dLng * dLng <= radius2);
       }
     };
   }
@@ -53,14 +52,14 @@ function getValidationFn(center, dist, units) {
     angle: toDeg(adjustedDist / (R * Math.cos(toRad(center.lat)))),
     validate: function(coord) {
       // Haversine algo (http://mathforum.org/library/drmath/view/51879.html)
-      var dlat = toRad(center.lat - coord.lat);
-      var dlng = toRad(center.lng - coord.lng);
-      var sin_dlat_2 = Math.sin(dlat/2);
-      var sin_dlng_2 = Math.sin(dlng/2);
-      var cos_ce_lat = Math.cos(toRad(center.lat));
-      var cos_co_lat = Math.cos(toRad(coord.lat));
-      var a = sin_dlat_2 * sin_dlat_2 + cos_ce_lat * cos_co_lat * sin_dlng_2 * sin_dlng_2;
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var dLat = toRad(center.lat - coord.lat);
+      var dLng = toRad(center.lng - coord.lng);
+      var sinDLat2 = Math.sin(dLat / 2);
+      var sinDLng2 = Math.sin(dLng / 2);
+      var cosCeLat = Math.cos(toRad(center.lat));
+      var cosCoLat = Math.cos(toRad(coord.lat));
+      var a = sinDLat2 * sinDLat2 + cosCeLat * cosCoLat * sinDLng2 * sinDLng2;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       return (R * c <= adjustedDist);
     }
   };
@@ -78,12 +77,12 @@ function GeoTree() {
 // lat, lng, data  - 3 args
 GeoTree.prototype.insert = function(arg1, arg2, arg3) {
   var lat, lng, data;
-  if ('number' === typeof(arg1)) {
+  if (typeof arg1 === 'number') {
     lat = arg1;
     lng = arg2;
     data = arg3;
-  } else if ('object' === typeof(arg1)) {
-    if ('number' === typeof(arg1.length)) {
+  } else if (typeof arg1 === 'object') {
+    if (typeof arg1.length === 'number') {
       for (var i = 0; i < arg1.length; i++) { this.insert(arg1[i]); }
       return;
     } else {
@@ -97,7 +96,7 @@ GeoTree.prototype.insert = function(arg1, arg2, arg3) {
   // lng: -180 .. +180
   var iLng = Math.round((lng + 180.0) * 100000);
   var idx = curve.xy2d(iLat, iLng);
-  this.tree.insert(idx, { idx: idx, lat: lat, lng: lng, data: data} );
+  this.tree.insert(idx, { idx: idx, lat: lat, lng: lng, data: data });
 };
 
 // supported args:
@@ -108,14 +107,19 @@ GeoTree.prototype.insert = function(arg1, arg2, arg3) {
 // { lat: ..., lng: ... }, radius, units (m, km, yd, mi) - circle
 GeoTree.prototype.find = function(arg1, arg2, arg3) {
   var all, radius, validate;
-  all = (0 === arguments.length);
+  all = (arguments.length === 0);
   if (undefined === arg2) { arg2 = arg1; }
-  if ('number' === typeof(arg2)) {
+  if (typeof arg2 === 'number') {
     var _tmp = getValidationFn(arg1, arg2, arg3);
     radius = _tmp.angle;
     validate = _tmp.validate;
   }
-  var minLat, maxLat, minLng, maxLng, minIdx = -Infinity, maxIdx = Infinity;
+  var minLat;
+  var maxLat;
+  var minLng;
+  var maxLng;
+  var minIdx = -Infinity;
+  var maxIdx = Infinity;
   if (!all) {
     if (undefined === radius) {
       // rectangle
@@ -130,15 +134,18 @@ GeoTree.prototype.find = function(arg1, arg2, arg3) {
       minLng = Math.max(arg1.lng - radius, -180.0);
       maxLng = Math.min(arg1.lng + radius,  180.0);
     }
-    minIdx = curve.xy2d(Math.round((minLat + 90.0) * 100000),
-                        Math.round((minLng + 180.0) * 100000));
-    maxIdx = curve.xy2d(Math.round((maxLat + 90.0) * 100000),
-                        Math.round((maxLng + 180.0) * 100000));
+    minIdx = curve.xy2d(Math.round((minLat + 90.0) * 100000), Math.round((minLng + 180.0) * 100000));
+    maxIdx = curve.xy2d(Math.round((maxLat + 90.0) * 100000), Math.round((maxLng + 180.0) * 100000));
   }
   var candidates = this.tree.find(minIdx, maxIdx);
-  var i, item, lat, lng, res = [];
-  if (all) { for (i = 0; i < candidates.length; i++) { res.push(candidates[i].data); } }
-  else {
+  var i;
+  var item;
+  var lat;
+  var lng;
+  var res = [];
+  if (all) {
+    for (i = 0; i < candidates.length; i++) { res.push(candidates[i].data); }
+  } else {
     if (undefined === radius) {
       // rectangle
       for (i = 0; i < candidates.length; i++) {

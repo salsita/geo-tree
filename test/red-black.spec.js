@@ -6,7 +6,7 @@ var rbt, log;
 
 function createTestTree() {
   [99, 50, 80, 65, 70, 40, 41, 42, 48, 47, 45, 43, 55, 57, 58, 59, 60, 61, 62]
-  .forEach(function(i) { rbt.insert({key: i, value: i}); });
+    .forEach(function(i) { rbt.insert({ key: i, value: i }); });
 }
 
 function addLog(element) {
@@ -15,9 +15,7 @@ function addLog(element) {
 
 // --- end of helpers ---
 
-
 describe('red-black module', function() {
-
   beforeEach(function() { rbt = new RBTree(); log = []; });
 
   it('should create empty tree', function() {
@@ -35,18 +33,14 @@ describe('red-black module', function() {
 
   it('insert (single object)', function() {
     // single {key: ..., value: ...} object
-    rbt.insert({key:10, value:10});
+    rbt.insert({ key: 10, value: 10 });
     assert.equal(rbt.dump(true), '[k:10,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[10]]');
   });
 
   it('insert (array of objects)', function() {
     // [ { key: ..., value: ... }, ... ]  -- array of the above objects
-    rbt.insert([{key:20, value:20}, {key:10, value:10}, {key:30, value:30}]);
-    assert.equal(rbt.dump(true),
-      '[k:20,c:B,#:1,l:10,r:30,p:NULL,v:[20]]' +
-        '[k:10,c:R,#:1,l:NULL,r:NULL,p:20,v:[10]]' +
-        '[k:30,c:R,#:1,l:NULL,r:NULL,p:20,v:[30]]'
-    );
+    rbt.insert([{ key: 20, value: 20 }, { key: 10, value: 10 }, { key: 30, value: 30 }]);
+    assert.equal(rbt.dump(true), '[k:20,c:B,#:1,l:10,r:30,p:NULL,v:[20]][k:10,c:R,#:1,l:NULL,r:NULL,p:20,v:[10]][k:30,c:R,#:1,l:NULL,r:NULL,p:20,v:[30]]');
   });
 
   it('insert (single numerical value)', function() {
@@ -69,8 +63,8 @@ describe('red-black module', function() {
   });
 
   it('insert (traversal code)', function() {
-    rbt.insert([{key:10,value:10},{key:15,value:15},{key:5,value:5},
-      {key:1,value:1},{key:6,value:6},{key:20,value:20}]);
+    rbt.insert([{ key: 10, value: 10 }, { key: 15, value: 15 }, { key: 5, value: 5 },
+      { key: 1, value: 1 }, { key: 6, value: 6 }, { key: 20, value: 20 }]);
     assert.equal(rbt.dump(true),
       '[k:10,c:B,#:1,l:5,r:15,p:NULL,v:[10]]' +
         '[k:5,c:B,#:1,l:1,r:6,p:10,v:[5]]' +
@@ -129,7 +123,6 @@ describe('red-black module', function() {
     res.forEach(function(val, idx) { assert.equal(expect[idx], val); });
   });
 
-
   it('find (range search: not found)', function() {
     createTestTree();
     assert.equal(rbt.find(12, 20).length, 0);
@@ -168,5 +161,4 @@ describe('red-black module', function() {
     assert.equal(log.length, expect.length);
     log.forEach(function(val, idx) { assert.equal(expect[idx], val); });
   });
-
 });

@@ -10,8 +10,8 @@
 // rbt.dump();              ... text dump of the tree (for debugging / testing purposes)
 //
 
-
-var RED = 0, BLACK = 1;
+var RED = 0;
+var BLACK = 1;
 
 // --- NODE ---
 
@@ -55,9 +55,10 @@ function RBTree() {
 // key  -- 1 arg, value not provided
 // key, value  -- 2 args
 RBTree.prototype.insert = function(arg1, arg2) {
-  if ('number' === typeof(arg1)) { this._insert(arg1, arg2); }
-  else if ('object' === typeof(arg1)) {
-    if ('number' === typeof(arg1.length)) {
+  if (typeof arg1 === 'number') {
+    this._insert(arg1, arg2);
+  } else if (typeof arg1 === 'object') {
+    if (typeof arg1.length === 'number') {
       var ref;
       for (var i = 0; i < arg1.length; i++) {
         ref = arg1[i];
@@ -80,11 +81,9 @@ RBTree.prototype._insert = function(/* number */ key, value) {
         return;
       }
       if (key < p.key) {
-        if (p.left) { p = p.left; }
-        else { n = p.left = new RBNode(p, key, value); break; }
+        if (p.left) { p = p.left; } else { n = p.left = new RBNode(p, key, value); break; }
       } else {
-        if (p.right) { p = p.right; }
-        else { n = p.right = new RBNode(p, key, value); break; }
+        if (p.right) { p = p.right; } else { n = p.right = new RBNode(p, key, value); break; }
       }
     }
   }
@@ -102,32 +101,36 @@ RBTree.prototype._insert = function(/* number */ key, value) {
     // n RED, p RED, (u BLACK), g BLACK
     if (n === p.right && p === g.left) {
       g.left = n; n.parent = g;
-      if (p.right = n.left) { n.left.parent = p; }
+      p.right = n.left
+      if (p.right) { n.left.parent = p; }
       n.left = p; p.parent = n;
       n = p; p = n.parent;
     } else if (n === p.left && p === g.right) {
       g.right = n; n.parent = g;
-      if (p.left = n.right) { n.right.parent = p; }
+      p.left = n.right;
+      if (p.left) { n.right.parent = p; }
       n.right = p; p.parent = n;
       n = p; p = n.parent;
     }
     p.color = BLACK;
     g.color = RED;
     if (n === p.left) {
-      if (g.left = p.right) { p.right.parent = g; }
+      g.left = p.right;
+      if (g.left) { p.right.parent = g; }
       p.right = g;
     } else {
-      if (g.right = p.left) { p.left.parent = g; }
+      g.right = p.left;
+      if (g.right) { p.left.parent = g; }
       p.left = g;
     }
     pg = g.parent;
-    if (pg) { if (g === pg.left) { pg.left = p; } else { pg.right = p; } }
-    else { this.root = p; p.color = BLACK; }
+    if (pg) {
+      if (g === pg.left) { pg.left = p; } else { pg.right = p; }
+    } else { this.root = p; p.color = BLACK; }
     p.parent = pg; g.parent = p;
     break;
   }
 };
-
 
 // supported args:
 // key  -- single numeric value, exact match
@@ -136,7 +139,8 @@ RBTree.prototype.find = function(start, end) {
   if (!this.root) { return []; }
   if (end === undefined) { end = start; }
   var res = [];
-  var node, stack = [this.root];
+  var node;
+  var stack = [this.root];
   while (stack.length) {
     node = stack.pop();
     if (node.key >= start && node.key <= end) { res.push(node.values); }
@@ -144,7 +148,10 @@ RBTree.prototype.find = function(start, end) {
     if (node.left && node.key > start) { stack.push(node.left); }
   }
   // flatten res:
-  var flatRes = [], i, j, _ref;
+  var flatRes = [];
+  var i;
+  var j;
+  var _ref;
   for (i = 0; i < res.length; i++) {
     _ref = res[i];
     for (j = 0; j < _ref.length; j++) { flatRes.push(_ref[j]); }
@@ -157,7 +164,8 @@ RBTree.prototype.forEach = function(callback) {
   function dfs(node) {
     if (!node) { return; }
     dfs(node.left);
-    var ref = node.values, key = node.key;
+    var ref = node.values;
+    var key = node.key;
     for (var i = 0; i < ref.length; i++) { callback(ref[i], key); }
     dfs(node.right);
   }
@@ -172,7 +180,6 @@ RBTree.prototype.forEach = function(callback) {
 // key  - 1 arg, value not provided
 // key, value  - 2 args
 // RBTree.prototype.remove = function(arg1, arg2) {
-  // TODO
 // };
 
 // RBTree.prototype._remove = function(key) {
@@ -184,17 +191,17 @@ RBTree.prototype.dump = function(silent) {
   var res = '';
   function dumpNode(node, indent) {
     if (!node) { return; }
-    /* istanbul ignore else */
-    if (silent) { res += node.dump(); }
-    else { console.log(((undefined !== indent) ? indent + '+ ' : '') + node.dump()); }
+    if (silent) {
+      res += node.dump();
+    } else {
+      console.log(((undefined !== indent) ? indent + '+ ' : '') + node.dump());
+    }
     var s = (undefined === indent) ? '' : (indent + '  ');
     dumpNode(node.left, s);
     dumpNode(node.right, s);
   }
-  /* istanbul ignore if */
   if (!silent) { console.log('--- dump start ---'); }
   dumpNode(this.root);
-  /* istanbul ignore if */
   if (!silent) { console.log('--- dump end ---'); }
   return res;
 };
