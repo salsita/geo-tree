@@ -34,38 +34,38 @@ describe('red-black module', function() {
   it('insert (single object)', function() {
     // single {key: ..., value: ...} object
     rbt.insert({ key: 10, value: 10 });
-    assert.equal(rbt.dump(true), '[k:10,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[10]]');
+    assert.strictEqual(rbt.dump(true), '[k:10,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[10]]');
   });
 
   it('insert (array of objects)', function() {
     // [ { key: ..., value: ... }, ... ]  -- array of the above objects
     rbt.insert([{ key: 20, value: 20 }, { key: 10, value: 10 }, { key: 30, value: 30 }]);
-    assert.equal(rbt.dump(true), '[k:20,c:B,#:1,l:10,r:30,p:NULL,v:[20]][k:10,c:R,#:1,l:NULL,r:NULL,p:20,v:[10]][k:30,c:R,#:1,l:NULL,r:NULL,p:20,v:[30]]');
+    assert.strictEqual(rbt.dump(true), '[k:20,c:B,#:1,l:10,r:30,p:NULL,v:[20]][k:10,c:R,#:1,l:NULL,r:NULL,p:20,v:[10]][k:30,c:R,#:1,l:NULL,r:NULL,p:20,v:[30]]');
   });
 
   it('insert (single numerical value)', function() {
     // key  -- 1 arg, value not provided
     rbt.insert(40);
-    assert.equal(rbt.dump(true), '[k:40,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[null]]');
+    assert.strictEqual(rbt.dump(true), '[k:40,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[null]]');
   });
 
   it('insert (key / value numerical)', function() {
     // key, value  -- 2 args
     rbt.insert(50, 50);
-    assert.equal(rbt.dump(true), '[k:50,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[50]]');
+    assert.strictEqual(rbt.dump(true), '[k:50,c:B,#:1,l:NULL,r:NULL,p:NULL,v:[50]]');
   });
 
   it('insert (multiple values fro the same key)', function() {
     // insert value with existing key --> append to existing node
     rbt.insert(40, 40);
     rbt.insert(40, 60);
-    assert.equal(rbt.dump(true), '[k:40,c:B,#:2,l:NULL,r:NULL,p:NULL,v:[40,60]]');
+    assert.strictEqual(rbt.dump(true), '[k:40,c:B,#:2,l:NULL,r:NULL,p:NULL,v:[40,60]]');
   });
 
   it('insert (traversal code)', function() {
     rbt.insert([{ key: 10, value: 10 }, { key: 15, value: 15 }, { key: 5, value: 5 },
       { key: 1, value: 1 }, { key: 6, value: 6 }, { key: 20, value: 20 }]);
-    assert.equal(rbt.dump(true),
+    assert.strictEqual(rbt.dump(true),
       '[k:10,c:B,#:1,l:5,r:15,p:NULL,v:[10]]' +
         '[k:5,c:B,#:1,l:1,r:6,p:10,v:[5]]' +
           '[k:1,c:R,#:1,l:NULL,r:NULL,p:5,v:[1]]' +
@@ -77,7 +77,7 @@ describe('red-black module', function() {
 
   it('insert (balancing)', function() {
     createTestTree();
-    assert.equal(rbt.dump(true),
+    assert.strictEqual(rbt.dump(true),
       '[k:55,c:B,#:1,l:45,r:65,p:NULL,v:[55]]' +
         '[k:45,c:R,#:1,l:41,r:48,p:55,v:[45]]' +
           '[k:41,c:B,#:1,l:40,r:42,p:45,v:[41]]' +
@@ -105,27 +105,27 @@ describe('red-black module', function() {
   //
 
   it('find (on empty tree)', function() {
-    assert.equal(rbt.find(45, 59).length, 0);
+    assert.strictEqual(rbt.find(45, 59).length, 0);
   });
 
   it('find (exact match: not found)', function() {
     createTestTree();
-    assert.equal(rbt.find(44).length, 0);
+    assert.strictEqual(rbt.find(44).length, 0);
   });
 
   it('find (exact match: found)', function() {
     createTestTree();
-    assert.equal(rbt.find(45).length, 1);
+    assert.strictEqual(rbt.find(45).length, 1);
     var expect = [45, 'hello'];
     rbt.insert(45, 'hello');
     var res = rbt.find(45).sort();
-    assert.equal(res.length, expect.length);
-    res.forEach(function(val, idx) { assert.equal(expect[idx], val); });
+    assert.strictEqual(res.length, expect.length);
+    res.forEach(function(val, idx) { assert.strictEqual(expect[idx], val); });
   });
 
   it('find (range search: not found)', function() {
     createTestTree();
-    assert.equal(rbt.find(12, 20).length, 0);
+    assert.strictEqual(rbt.find(12, 20).length, 0);
   });
 
   it('find (range search: found)', function() {
@@ -133,8 +133,8 @@ describe('red-black module', function() {
     rbt.insert(45, 'world');
     var expect = [45, 47, 48, 50, 55, 'world'];
     var res = rbt.find(45, 56).sort();
-    assert.equal(res.length, expect.length);
-    res.forEach(function(val, idx) { assert.equal(expect[idx], val); });
+    assert.strictEqual(res.length, expect.length);
+    res.forEach(function(val, idx) { assert.strictEqual(expect[idx], val); });
   });
 
   //
@@ -144,12 +144,12 @@ describe('red-black module', function() {
   it('forEach (no callback)', function() {
     createTestTree();
     rbt.forEach();
-    assert.equal(log.length, 0);
+    assert.strictEqual(log.length, 0);
   });
 
   it('forEach (on empty tree)', function() {
     rbt.forEach(addLog);
-    assert.equal(log.length, 0);
+    assert.strictEqual(log.length, 0);
   });
 
   it('forEach (non-empty tree, valid callback)', function() {
@@ -158,7 +158,7 @@ describe('red-black module', function() {
     var expect = [99, 50, 80, 65, 70, 40, 41, 42, 48, 47, 45, 43, 55, 57, 58, 59, 60, 61, 62];
     expect = expect.sort();
     log = log.sort();
-    assert.equal(log.length, expect.length);
-    log.forEach(function(val, idx) { assert.equal(expect[idx], val); });
+    assert.strictEqual(log.length, expect.length);
+    log.forEach(function(val, idx) { assert.strictEqual(expect[idx], val); });
   });
 });
