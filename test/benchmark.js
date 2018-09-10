@@ -39,7 +39,7 @@ for (i = 0; i < N; i++) { arr.push({ key: i }); }
 benchmark('linear', arr);
 
 arr = [];
-for (i = 0; i < N; i++) { arr.push({key: Math.floor(Math.random() * N)}); }
+for (i = 0; i < N; i++) { arr.push({ key: Math.floor(Math.random() * N) }); }
 benchmark('random', arr);
 
 arr = [];
@@ -97,21 +97,21 @@ console.log('\n------------------------------------------------------------\n');
 
 var res;
 tsStart = new Date();
-res = tree.find({lat: 0.0, lng: 0.0}, 5.0);
+res = tree.find({ lat: 0.0, lng: 0.0 }, 5.0);
 tsEnd = new Date();
 console.log('find({ lat: 0.0, lng: 0.0 }, 5.0): ' + (tsEnd - tsStart) + 'ms, res.length: ' + res.length);
 tsStart = new Date();
-res = tree.find({lat: 0.0, lng: 0.0}, 556.6, 'km');
+res = tree.find({ lat: 0.0, lng: 0.0 }, 556.6, 'km');
 tsEnd = new Date();
 console.log('find({ lat: 0.0, lng: 0.0 }, 556.6, "km"): ' + (tsEnd - tsStart) + 'ms, res.length: ' + res.length);
 
 console.log('\n');
 
 tsStart = new Date();
-res = tree.find({lat: 50.0, lng: 0.0}, 5.0);
+res = tree.find({ lat: 50.0, lng: 0.0 }, 5.0);
 tsEnd = new Date();
 console.log('find({ lat: 50.0, lng: 0.0 }, 5.0): ' + (tsEnd - tsStart) + 'ms, res.length: ' + res.length);
 tsStart = new Date();
-res = tree.find({lat: 50.0, lng: 0.0}, 556.6, 'km');
+res = tree.find({ lat: 50.0, lng: 0.0 }, 556.6, 'km');
 tsEnd = new Date();
 console.log('find({ lat: 50.0, lng: 0.0 }, 556.6, "km"): ' + (tsEnd - tsStart) + 'ms, res.length: ' + res.length);
