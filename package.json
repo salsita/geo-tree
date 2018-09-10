@@ -42,5 +42,8 @@
       "config:base"
     ],
     "bumpVersion": "patch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
