@@ -216,7 +216,7 @@ $ node test/test
 
 ## MIT License
 
-Copyright (c) 2014--2018 Salsita Software
+Copyright (c) 2014 -- 2019 Salsita Software
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
