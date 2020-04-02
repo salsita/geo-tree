@@ -1,6 +1,6 @@
 {
   "name": "geo-tree",
-  "version": "1.0.64",
+  "version": "1.0.65",
   "description": "High performance library for geographical map-related operations",
   "license": "MIT",
   "author": "Roman Kaspar <roman@salsitasoft.com>",
@@ -34,7 +34,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
-    "jest": "25.2.4"
+    "jest": "25.2.6"
   },
   "dependencies": {},
   "renovate": {
