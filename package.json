@@ -16,7 +16,9 @@
   },
   "main": "src/geo-tree.js",
   "scripts": {
-    "test": "eslint src test && jest test/*.spec.js --coverage"
+    "lint": "eslint src test",
+    "pretest": "npm run lint",
+    "test": "jest test/*.spec.js --coverage"
   },
   "keywords": [
     "geographical",
