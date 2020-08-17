@@ -30,13 +30,13 @@
     "node.js"
   ],
   "devDependencies": {
-    "eslint": "7.6.0",
+    "eslint": "7.7.0",
     "eslint-config-standard": "14.1.1",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
-    "jest": "26.2.2"
+    "jest": "26.4.0"
   },
   "dependencies": {},
   "renovate": {
